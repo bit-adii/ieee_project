@@ -1,0 +1,37 @@
+import json
+import re
+
+# Load master skill list
+with open("data/skills.json") as f:
+    SKILLS = json.load(f)
+
+
+def preprocess_text(text):
+    """
+    Clean and normalize text for matching.
+    """
+    text = re.sub(r'[^a-zA-Z0-9#+ ]', '', text)
+    return text.lower()
+
+
+def build_skill_vector(text):
+    """
+    Creates binary skill vector based on skills.json.
+    Returns:
+        - vector (list of 0/1)
+        - detected skill names
+    """
+
+    text = preprocess_text(text)
+
+    skill_vector = []
+    detected_skills = []
+
+    for skill in SKILLS:
+        if skill.lower() in text:
+            skill_vector.append(1)
+            detected_skills.append(skill)
+        else:
+            skill_vector.append(0)
+
+    return skill_vector, detected_skills

@@ -1,0 +1,138 @@
+{
+  "AI Engineer": {
+    "required_skills": [
+      "python",
+      "machine learning",
+      "statistics",
+      "data structures",
+      "system design",
+      "api design",
+      "backend development",
+      "problem solving"
+    ],
+    "personality_vector": [85, 80, 55, 60, 80],
+    "skill_weight": 0.65,
+    "personality_weight": 0.35,
+    "stress_level": 75,
+    "role_type": "Technical Research"
+  },
+
+  "Game Developer": {
+    "required_skills": [
+      "c++",
+      "unity",
+      "unreal engine",
+      "game design",
+      "3d modeling",
+      "shader programming",
+      "problem solving",
+      "team collaboration"
+    ],
+    "personality_vector": [80, 70, 65, 60, 75],
+    "skill_weight": 0.6,
+    "personality_weight": 0.4,
+    "stress_level": 70,
+    "role_type": "Creative Technical"
+  },
+
+  "Mobile App Developer": {
+    "required_skills": [
+      "flutter",
+      "react native",
+      "ios development",
+      "android development",
+      "swift",
+      "kotlin",
+      "api design",
+      "ui/ux design"
+    ],
+    "personality_vector": [75, 75, 60, 65, 70],
+    "skill_weight": 0.6,
+    "personality_weight": 0.4,
+    "stress_level": 65,
+    "role_type": "Product Development"
+  },
+
+  "Full Stack Developer": {
+    "required_skills": [
+      "javascript",
+      "typescript",
+      "nodejs",
+      "expressjs",
+      "mongodb",
+      "postgresql",
+      "frontend development",
+      "backend development",
+      "api design"
+    ],
+    "personality_vector": [75, 85, 60, 65, 75],
+    "skill_weight": 0.6,
+    "personality_weight": 0.4,
+    "stress_level": 72,
+    "role_type": "Engineering Execution"
+  },
+
+  "DevOps Engineer": {
+    "required_skills": [
+      "docker",
+      "kubernetes",
+      "aws",
+      "azure",
+      "gcp",
+      "devops",
+      "cloud architecture",
+      "microservices"
+    ],
+    "personality_vector": [70, 90, 50, 70, 80],
+    "skill_weight": 0.7,
+    "personality_weight": 0.3,
+    "stress_level": 85,
+    "role_type": "Infrastructure Critical"
+  },
+
+  "Cybersecurity Engineer": {
+    "required_skills": [
+      "cybersecurity",
+      "penetration testing",
+      "network security",
+      "problem solving",
+      "critical thinking"
+    ],
+    "personality_vector": [65, 90, 45, 80, 85],
+    "skill_weight": 0.7,
+    "personality_weight": 0.3,
+    "stress_level": 90,
+    "role_type": "Security Critical"
+  },
+
+  "Product Manager": {
+    "required_skills": [
+      "project management",
+      "agile",
+      "scrum",
+      "communication",
+      "team collaboration",
+      "critical thinking"
+    ],
+    "personality_vector": [80, 85, 85, 70, 50],
+    "skill_weight": 0.5,
+    "personality_weight": 0.5,
+    "stress_level": 80,
+    "role_type": "Leadership Strategic"
+  },
+
+  "Solutions Architect": {
+    "required_skills": [
+      "system design",
+      "cloud architecture",
+      "microservices",
+      "database design",
+      "technical writing"
+    ],
+    "personality_vector": [85, 90, 60, 75, 80],
+    "skill_weight": 0.65,
+    "personality_weight": 0.35,
+    "stress_level": 78,
+    "role_type": "Strategic Technical"
+  }
+}

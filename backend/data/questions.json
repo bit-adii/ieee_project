@@ -1,0 +1,12 @@
+[
+  {"id": 1, "question": "I enjoy solving difficult problems on my own."},
+  {"id": 2, "question": "I feel energized working in teams."},
+  {"id": 3, "question": "I like trying new ideas even if they fail."},
+  {"id": 4, "question": "I prefer structured planning over spontaneity."},
+  {"id": 5, "question": "I stay calm under pressure."},
+  {"id": 6, "question": "I enjoy building products people use."},
+  {"id": 7, "question": "I am comfortable leading others."},
+  {"id": 8, "question": "I enjoy deep technical challenges."},
+  {"id": 9, "question": "I prefer stability over risk."},
+  {"id": 10, "question": "I like turning ideas into reality."}
+]

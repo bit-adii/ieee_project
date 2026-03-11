@@ -1,0 +1,196 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import json
+
+# Core Engines
+from modules.resume_parser import extract_text_from_pdf
+from modules.skill_extractor import build_skill_vector
+from modules.personality_engine import calculate_personality_vector
+from modules.compatibility_engine import compute_overall_compatibility
+from modules.simulation_engine import simulate_growth
+from modules.virtual_self_engine import build_virtual_self_profile
+from modules.monte_carlo_engine import monte_carlo_growth
+
+# Advanced Engines
+from modules.risk_engine import compute_burnout_risk
+from modules.explanation_engine import generate_explanation
+from modules.decision_engine import simulate_decision_scenario
+
+app = Flask(__name__)
+CORS(app)
+
+# -----------------------------------------
+# Load Data
+# -----------------------------------------
+with open("data/roles.json") as f:
+    ROLES = json.load(f)
+
+with open("data/questions.json") as f:
+    QUESTIONS = json.load(f)
+
+
+# -----------------------------------------
+# Health Check
+# -----------------------------------------
+@app.route("/")
+def home():
+    return jsonify({"status": "Career Intelligence Virtual Self Engine Running"})
+
+
+# -----------------------------------------
+# Get Personality Questions
+# -----------------------------------------
+@app.route("/questions", methods=["GET"])
+def get_questions():
+    return jsonify({"questions": QUESTIONS})
+
+
+# -----------------------------------------
+# Main Analysis Route
+# -----------------------------------------
+@app.route("/analyze", methods=["POST"])
+def analyze():
+
+    resume_text = None
+    personality_answers = None
+    role = None
+
+    # -----------------------------
+    # JSON Request (Frontend use)
+    # -----------------------------
+    if request.is_json:
+        data = request.get_json()
+        resume_text = data.get("resume_text")
+        personality_answers = data.get("personality_answers")
+        role = data.get("role")
+
+    # -----------------------------
+    # form-data (PDF upload support)
+    # -----------------------------
+    else:
+        resume_file = request.files.get("resume")
+
+        if resume_file:
+            resume_text = extract_text_from_pdf(resume_file)
+        else:
+            resume_text = request.form.get("resume_text")
+
+        personality_answers = request.form.get("personality_answers")
+        role = request.form.get("role")
+
+        if personality_answers:
+            try:
+                personality_answers = json.loads(personality_answers)
+            except:
+                return jsonify({"error": "Invalid personality_answers format"}), 400
+
+    # -----------------------------
+    # Validation
+    # -----------------------------
+    if not resume_text:
+        return jsonify({"error": "Resume text or file is required"}), 400
+
+    if not personality_answers:
+        return jsonify({"error": "personality_answers is required"}), 400
+
+    if not role:
+        return jsonify({"error": "role is required"}), 400
+
+    if len(personality_answers) != 10:
+        return jsonify({"error": "Exactly 10 personality answers required"}), 400
+
+    role_data = ROLES.get(role)
+
+    if not role_data:
+        return jsonify({"error": "Invalid role selected"}), 400
+
+    # -----------------------------
+    # 1️⃣ Skill Vector
+    # -----------------------------
+    user_skill_vector, detected_skills = build_skill_vector(resume_text)
+
+    # -----------------------------
+    # 2️⃣ Personality Vector
+    # -----------------------------
+    user_personality_vector = calculate_personality_vector(personality_answers)
+
+    # -----------------------------
+    # 3️⃣ Compatibility + Missing Skills
+    # -----------------------------
+    compatibility_score, missing_skills = compute_overall_compatibility(
+        user_skill_vector,
+        user_personality_vector,
+        role_data
+    )
+
+    # -----------------------------
+    # 4️⃣ Burnout Risk
+    # -----------------------------
+    burnout_risk = compute_burnout_risk(
+        user_personality_vector,
+        role_data
+    )
+
+    # -----------------------------
+    # 5️⃣ Deterministic Growth
+    # -----------------------------
+    projection = simulate_growth(
+        compatibility_score,
+        user_skill_vector,
+        role_data
+    )
+
+    # -----------------------------
+    # 6️⃣ Monte Carlo Growth
+    # -----------------------------
+    monte_carlo_projection = monte_carlo_growth(
+        compatibility_score,
+        user_skill_vector,
+        role_data
+    )
+
+    # -----------------------------
+    # 7️⃣ Virtual Self Profile
+    # -----------------------------
+    virtual_self = build_virtual_self_profile(
+        user_personality_vector
+    )
+
+    # -----------------------------
+    # 8️⃣ AI Explanation
+    # -----------------------------
+    explanation = generate_explanation(
+        compatibility_score,
+        missing_skills,
+        virtual_self
+    )
+
+    # -----------------------------
+    # 9️⃣ Decision Simulation Sample
+    # -----------------------------
+    decision_simulation = simulate_decision_scenario(
+        user_personality_vector,
+        "startup_risk"
+    )
+
+    # -----------------------------
+    # Final Response
+    # -----------------------------
+    return jsonify({
+        "detected_skills": detected_skills,
+        "compatibility_score": compatibility_score,
+        "missing_skills": missing_skills,
+        "burnout_risk": burnout_risk,
+        "projection": projection,
+        "monte_carlo_projection": monte_carlo_projection,
+        "virtual_self_profile": virtual_self,
+        "explanation": explanation,
+        "decision_simulation": decision_simulation
+    })
+
+
+# -----------------------------------------
+# Run Server
+# -----------------------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
