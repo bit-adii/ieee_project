@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Self Engine | Career Intelligence</title>
+  <meta name="description" content="Discover your parallel career self. AI-powered career intelligence using skill analysis, personality profiling, and Monte Carlo growth simulations."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+  <!-- Particle Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        IEEE Research Project · Career Intelligence Engine
+      </div>
+      <h1 class="hero-title">
+        Meet Your<br/>
+        <span class="gradient-text">Parallel Self</span>
+      </h1>
+      <p class="hero-subtitle">
+        Step into a alternate version of you. Our AI engine maps your skills, 
+        decodes your personality, and simulates who you could become across timelines.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" id="start-analysis-btn" onclick="scrollToStep(1)">
+          <span>Begin Analysis</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-ghost" onclick="scrollToStep(1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          How it works
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">71</span><span class="stat-label">Skills Tracked</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Career Paths</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-num">1000×</span><span class="stat-label">Monte Carlo Runs</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring ring-1"></div>
+      <div class="orbit-ring ring-2"></div>
+      <div class="orbit-ring ring-3"></div>
+      <div class="core-sphere">
+        <div class="sphere-inner">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+      <div class="orbit-dot dot-1"></div>
+      <div class="orbit-dot dot-2"></div>
+      <div class="orbit-dot dot-3"></div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN APP ===================== -->
+  <div class="app-container">
+
+    <!-- Progress Stepper -->
+    <div class="stepper" id="stepper">
+      <div class="stepper-track">
+        <div class="step active" id="step-indicator-1" data-step="1">
+          <div class="step-circle"><span>1</span></div>
+          <div class="step-label">Choose Role</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step-indicator-2" data-step="2">
+          <div class="step-circle"><span>2</span></div>
+          <div class="step-label">Personality</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step-indicator-3" data-step="3">
+          <div class="step-circle"><span>3</span></div>
+          <div class="step-label">Resume</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step-indicator-4" data-step="4">
+          <div class="step-circle"><span>4</span></div>
+          <div class="step-label">Results</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 1: ROLE SELECTION ===== -->
+    <section class="step-section active" id="step-1">
+      <div class="section-header">
+        <div class="section-tag">Step 01</div>
+        <h2 class="section-title">Choose Your <span class="gradient-text">Parallel Path</span></h2>
+        <p class="section-desc">Select the career role you want to be analyzed against. Each role has unique skill requirements and personality weights.</p>
+      </div>
+      <div class="roles-grid" id="roles-grid">
+        <!-- Injected by JS -->
+      </div>
+      <div class="step-nav">
+        <button class="btn-primary" id="to-step-2" onclick="goToStep(2)" disabled>
+          Continue to Personality Quiz
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== STEP 2: PERSONALITY QUIZ ===== -->
+    <section class="step-section" id="step-2">
+      <div class="section-header">
+        <div class="section-tag">Step 02</div>
+        <h2 class="section-title">Map Your <span class="gradient-text">Inner Dimensions</span></h2>
+        <p class="section-desc">Rate each statement on a scale of 1 (Strongly Disagree) to 5 (Strongly Agree). This builds your 5-dimensional personality vector.</p>
+      </div>
+      <div class="quiz-container" id="quiz-container">
+        <!-- Injected by JS -->
+      </div>
+      <div class="personality-preview" id="personality-preview" style="display:none;">
+        <div class="preview-title">Your Personality Vector Preview</div>
+        <div class="preview-bars" id="preview-bars"></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-ghost" onclick="goToStep(1)">← Back</button>
+        <button class="btn-primary" id="to-step-3" onclick="goToStep(3)" disabled>
+          Continue to Resume
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== STEP 3: RESUME ===== -->
+    <section class="step-section" id="step-3">
+      <div class="section-header">
+        <div class="section-tag">Step 03</div>
+        <h2 class="section-title">Upload Your <span class="gradient-text">Digital DNA</span></h2>
+        <p class="section-desc">Upload your resume as PDF or paste the text directly. We'll extract your skill signature from it.</p>
+      </div>
+
+      <div class="resume-tabs">
+        <button class="tab-btn active" id="tab-pdf" onclick="switchResumeTab('pdf')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Upload PDF
+        </button>
+        <button class="tab-btn" id="tab-text" onclick="switchResumeTab('text')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+          Paste Text
+        </button>
+      </div>
+
+      <div id="resume-pdf-panel" class="resume-panel active">
+        <label class="dropzone" id="dropzone" for="pdf-input">
+          <div class="dropzone-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="dropzone-text">Drag & drop your PDF here</div>
+          <div class="dropzone-sub">or click to browse — PDF files only</div>
+          <div class="dropzone-file-name" id="pdf-filename"></div>
+        </label>
+        <input type="file" id="pdf-input" accept=".pdf" style="display:none" onchange="handlePdfUpload(event)"/>
+      </div>
+
+      <div id="resume-text-panel" class="resume-panel" style="display:none;">
+        <textarea
+          id="resume-text-input"
+          class="resume-textarea"
+          placeholder="Paste your resume text here... Include all your skills, experience, and technologies you've worked with."
+          rows="14"
+          oninput="checkResumeStep()"
+        ></textarea>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
+        <button class="btn-primary" id="analyze-btn" onclick="runAnalysis()" disabled>
+          <span id="analyze-btn-text">Analyze My Parallel Self</span>
+          <div class="btn-spinner" id="btn-spinner" style="display:none;"></div>
+          <svg id="analyze-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== STEP 4: RESULTS ===== -->
+    <section class="step-section" id="step-4">
+      <div class="section-header">
+        <div class="section-tag">Step 04</div>
+        <h2 class="section-title">Your <span class="gradient-text">Parallel Reality</span></h2>
+        <p class="section-desc">The AI has analyzed your profile across 9 dimensions. Here is who you are — and who you could become.</p>
+      </div>
+
+      <!-- Top Row -->
+      <div class="results-top">
+        <!-- Compatibility Score -->
+        <div class="glass-card score-card">
+          <div class="card-header">
+            <div class="card-icon purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <div class="card-title">Compatibility Score</div>
+              <div class="card-subtitle">vs. <span id="result-role-name">Selected Role</span></div>
+            </div>
+          </div>
+          <div class="score-ring-container">
+            <canvas id="score-ring" width="200" height="200"></canvas>
+            <div class="score-ring-center">
+              <span class="score-big" id="score-display">0</span>
+              <span class="score-pct">%</span>
+            </div>
+          </div>
+          <div class="score-label" id="score-label-text">Calculating...</div>
+        </div>
+
+        <!-- Virtual Self Profile -->
+        <div class="glass-card virtual-self-card">
+          <div class="card-header">
+            <div class="card-icon cyan">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="card-title">Virtual Self Profile</div>
+          </div>
+          <div class="virtual-self-grid" id="virtual-self-grid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Burnout Risk -->
+        <div class="glass-card burnout-card">
+          <div class="card-header">
+            <div class="card-icon red">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+            </div>
+            <div class="card-title">Burnout Risk</div>
+          </div>
+          <div class="burnout-meter-wrap">
+            <div class="burnout-arc-container">
+              <canvas id="burnout-arc" width="220" height="130"></canvas>
+              <div class="burnout-arc-label">
+                <span class="burnout-score-val" id="burnout-score">0</span>
+                <span class="burnout-level" id="burnout-level">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="burnout-desc" id="burnout-desc">Stress vs. Stability gap analysis</div>
+        </div>
+      </div>
+
+      <!-- Skills Row -->
+      <div class="results-row">
+        <!-- Detected Skills -->
+        <div class="glass-card skills-card">
+          <div class="card-header">
+            <div class="card-icon green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="card-title">Detected Skills</div>
+            <span class="chip-count" id="detected-count">0</span>
+          </div>
+          <div class="skills-chips" id="detected-skills"></div>
+        </div>
+
+        <!-- Missing Skills -->
+        <div class="glass-card skills-card">
+          <div class="card-header">
+            <div class="card-icon orange">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="card-title">Skills to Acquire</div>
+            <span class="chip-count missing" id="missing-count">0</span>
+          </div>
+          <div class="skills-chips" id="missing-skills"></div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="results-row">
+        <!-- 5-Year Deterministic Growth -->
+        <div class="glass-card chart-card">
+          <div class="card-header">
+            <div class="card-icon purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div class="card-title">5-Year Growth Projection</div>
+              <div class="card-subtitle">Deterministic simulation</div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="growth-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Monte Carlo -->
+        <div class="glass-card chart-card">
+          <div class="card-header">
+            <div class="card-icon cyan">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div>
+              <div class="card-title">Monte Carlo Simulation</div>
+              <div class="card-subtitle">1000 probabilistic runs · 90% confidence band</div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="monte-carlo-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row -->
+      <div class="results-row">
+        <!-- AI Explanation -->
+        <div class="glass-card explanation-card">
+          <div class="card-header">
+            <div class="card-icon violet">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l2 2"/><path d="M16 2a6 6 0 0 1 6 6"/></svg>
+            </div>
+            <div class="card-title">AI Explanation</div>
+          </div>
+          <div class="explanation-text" id="explanation-text">
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+
+        <!-- Decision Simulation -->
+        <div class="glass-card decision-card">
+          <div class="card-header">
+            <div class="card-icon yellow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="card-title">Decision Simulation</div>
+          </div>
+          <div class="decision-scenario">
+            <div class="scenario-tag">Startup Risk Scenario</div>
+            <p class="decision-text" id="decision-text">—</p>
+          </div>
+          <div class="decision-visual" id="decision-visual"></div>
+        </div>
+      </div>
+
+      <!-- Restart Button -->
+      <div class="restart-row">
+        <button class="btn-ghost" onclick="restartAnalysis()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+          Analyze Another Role
+        </button>
+      </div>
+
+    </section>
+
+  </div><!-- /app-container -->
+
+  <!-- Error Toast -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span id="toast-msg">An error occurred</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
