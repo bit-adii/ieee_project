@@ -4,8 +4,14 @@ import os
 
 # Load master skill list (using absolute path)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-with open(os.path.join(BASE_DIR, "data/skills.json")) as f:
-    SKILLS = json.load(f)
+SKILLS = []
+
+try:
+    with open(os.path.join(BASE_DIR, "data/skills.json")) as f:
+        SKILLS = json.load(f)
+except Exception as e:
+    print(f"Warning: Could not load skills.json: {str(e)}")
+    SKILLS = []
 
 
 def preprocess_text(text):
