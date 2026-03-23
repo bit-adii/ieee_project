@@ -3,7 +3,10 @@
    app.js — Full frontend logic & API integration
    ============================================================ */
 
-const API_BASE = "http://127.0.0.1:5000";
+// Auto-detect environment: use local Flask in dev, /api in production (Vercel)
+const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  ? "http://127.0.0.1:5000"
+  : "/api";
 
 // ── State ──────────────────────────────────────────────────
 let currentStep      = 1;

@@ -1,6 +1,18 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
+import logging
+import sys
+
+# -----------------------------------------
+# Logging — visible in Vercel function logs
+# -----------------------------------------
+logging.basicConfig(
+    stream=sys.stdout,
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 # Core Engines
 from modules.resume_parser import extract_text_from_pdf
@@ -33,14 +45,25 @@ with open("data/questions.json") as f:
 # Health Check
 # -----------------------------------------
 @app.route("/")
+@app.route("/api/")
 def home():
     return jsonify({"status": "Career Intelligence Virtual Self Engine Running"})
+
+
+# -----------------------------------------
+# Health Check (for production monitoring)
+# -----------------------------------------
+@app.route("/health")
+@app.route("/api/health")
+def health():
+    return jsonify({"ok": True})
 
 
 # -----------------------------------------
 # Get Personality Questions
 # -----------------------------------------
 @app.route("/questions", methods=["GET"])
+@app.route("/api/questions", methods=["GET"])
 def get_questions():
     return jsonify({"questions": QUESTIONS})
 
@@ -49,7 +72,9 @@ def get_questions():
 # Main Analysis Route
 # -----------------------------------------
 @app.route("/analyze", methods=["POST"])
+@app.route("/api/analyze", methods=["POST"])
 def analyze():
+    logger.info("POST /analyze — content-type: %s", request.content_type)
 
     resume_text = None
     personality_answers = None
@@ -176,7 +201,7 @@ def analyze():
     # -----------------------------
     # Final Response
     # -----------------------------
-    return jsonify({
+    result = {
         "detected_skills": detected_skills,
         "compatibility_score": compatibility_score,
         "missing_skills": missing_skills,
@@ -186,11 +211,31 @@ def analyze():
         "virtual_self_profile": virtual_self,
         "explanation": explanation,
         "decision_simulation": decision_simulation
-    })
+    }
+    logger.info("Analysis complete — score: %.1f, skills detected: %d",
+                compatibility_score, len(detected_skills))
+    return jsonify(result)
 
 
 # -----------------------------------------
 # Run Server
 # -----------------------------------------
+# -----------------------------------------
+# Global error handlers (production safety)
+# -----------------------------------------
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logger.exception("Unhandled exception in request: %s %s", request.method, request.path)
+    return jsonify({"error": "An internal server error occurred. Please try again."}), 500
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"error": "Route not found"}), 404
+
+@app.errorhandler(413)
+def request_too_large(e):
+    return jsonify({"error": "File too large. Please upload a PDF under 10 MB."}), 413
+
+
 if __name__ == "__main__":
     app.run(debug=True)
