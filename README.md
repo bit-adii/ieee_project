@@ -2,7 +2,7 @@
 
 > An AI-powered system that builds a digital **Virtual Self** to simulate career compatibility, growth projections, and decision outcomes.
 
-FutureForge analyzes a user's **skills, personality traits, and career goals** to simulate long-term career trajectories using **AI-driven modeling, compatibility scoring, and Monte Carlo simulations**.
+it anyylase a user's **skills, personality traits, and career goals** to simulate long-term career trajectories using **AI-driven modeling, compatibility scoring, and Monte Carlo simulations**.
 
 Unlike traditional career tools, FutureForge does not only recommend careers — it **predicts how well a user may thrive in them**.
 
