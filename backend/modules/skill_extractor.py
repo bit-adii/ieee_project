@@ -1,8 +1,10 @@
 import json
 import re
+import os
 
-# Load master skill list
-with open("data/skills.json") as f:
+# Load master skill list (using absolute path)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with open(os.path.join(BASE_DIR, "data/skills.json")) as f:
     SKILLS = json.load(f)
 
 

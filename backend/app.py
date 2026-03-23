@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import logging
 import sys
+import os
 
 # -----------------------------------------
 # Logging — visible in Vercel function logs
@@ -32,12 +33,13 @@ app = Flask(__name__)
 CORS(app)
 
 # -----------------------------------------
-# Load Data
+# Load Data (using absolute paths)
 # -----------------------------------------
-with open("data/roles.json") as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(BASE_DIR, "data/roles.json")) as f:
     ROLES = json.load(f)
 
-with open("data/questions.json") as f:
+with open(os.path.join(BASE_DIR, "data/questions.json")) as f:
     QUESTIONS = json.load(f)
 
 
@@ -96,7 +98,11 @@ def analyze():
         resume_file = request.files.get("resume")
 
         if resume_file:
-            resume_text = extract_text_from_pdf(resume_file)
+            try:
+                resume_text = extract_text_from_pdf(resume_file)
+            except Exception as e:
+                logger.error("PDF extraction error: %s", str(e))
+                return jsonify({"error": f"Failed to extract PDF: {str(e)}"}), 400
         else:
             resume_text = request.form.get("resume_text")
 
